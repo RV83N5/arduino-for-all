@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block link %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='leaflet/leaflet.css') }}"
+/>
+{% endblock %}
+{% block pageTitle %}
+Find a school to donate your gadget.
+{% endblock %}
+{% block content %}
+<div id="map"></div>
+{% endblock %}
+{% block javascript %}
+<script src="{{ url_for('static', filename='leaflet/leaflet.js') }}"></script>
+
+<script type="text/javascript">
+  navigator.geolocation.getCurrentPosition((position) => {
+    // centro do mapa = sua posição
+    let latlng = new L.LatLng(
+      position.coords.latitude,
+      position.coords.longitude
+    );
+
+    var map = L.map('map').setView(latlng, 11);
+
+    var layer = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }
+    ).addTo(map);
+
+    // adiciona um marcador para cada escola
+    {% for school in schools %}
+    (function() {
+      var lat = {{ school["latitude"] | float }};
+      var lng = {{ school["longitude"] | float }};
+      var id = {{ school["id"] }};
+      var name = "{{ school['name'] }}";
+
+      var marker = L.marker([lat, lng]).addTo(map);
+      marker.bindPopup(`<a href="/school/${id}">${name}</a>`);
+    })();
+    {% endfor %}
+  });
+</script>
+{% endblock %}

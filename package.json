@@ -1,0 +1,15 @@
+{
+  "name": "cs50",
+  "version": "1.0.0",
+  "description": "Hello, my name is Rubens, I’m from Brazil and I live in the State of Minas Gerais. I’m a coder, and it was thinking about the project that I came up with the idea for the final CS50 project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  }
+}
